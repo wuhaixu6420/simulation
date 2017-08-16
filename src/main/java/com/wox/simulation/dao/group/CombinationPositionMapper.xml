@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wox.simulation.dao.group.CombinationPositionMapper">
+    <resultMap id="BaseResultMap" type="com.wox.simulation.entity.group.CombinationPosition">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="combination_id" property="combinationId" jdbcType="VARCHAR" />
+        <result column="stock_name" property="stockName" jdbcType="VARCHAR" />
+        <result column="stock_code" property="stockCode" jdbcType="VARCHAR" />
+		<result column="stock_market" property="stockMarket" jdbcType="VARCHAR" />
+		<result column="usable_stock_num" property="usableStockNum" jdbcType="VARCHAR" />
+        <result column="position_stock_num" property="positionStockNum" jdbcType="VARCHAR" />
+        <result column="initial_position" property="initialPosition" jdbcType="VARCHAR" />
+		<result column="end_position" property="endPosition" jdbcType="VARCHAR" />
+		<result column="cost_price" property="costPrice" jdbcType="VARCHAR" />
+		<result column="market_price" property="marketPrice" jdbcType="VARCHAR" />
+		<result column="profit_loss_amount" property="profitLossAmount" jdbcType="VARCHAR" />
+		<result column="profit_loss_ratio" property="profitLossRatio" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        id, combination_id,stock_name,stock_code,stock_market,usable_stock_num,position_stock_num,initial_position,end_position,cost_price,market_price,profit_loss_amount,profit_loss_ratio,create_time,update_time
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wox.simulation.entity.group.CombinationPositionExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from combination_position
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from combination_position
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from combination_position
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.wox.simulation.entity.group.CombinationPositionExample">
+        delete from combination_position
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.wox.simulation.entity.group.CombinationPosition">
+        insert into combination_position (id, combination_id,stock_name,stock_code,stock_market,usable_stock_num,position_stock_num,initial_position,end_position,cost_price,market_price,profit_loss_amount,profit_loss_ratio,create_time,update_time)
+        values (#{id,jdbcType=BIGINT}, #{combinationId,jdbcType=VARCHAR},#{stockName,jdbcType=VARCHAR},#{stockCode,jdbcType=VARCHAR},#{stockMarket,jdbcType=VARCHAR},#{usableStockNum,jdbcType=VARCHAR},#{positionStockNum,jdbcType=VARCHAR},#{initialPosition,jdbcType=VARCHAR},#{endPosition,jdbcType=VARCHAR},#{costPrice,jdbcType=VARCHAR},#{marketPrice,jdbcType=VARCHAR},#{profitLossAmount,jdbcType=VARCHAR},#{profitLossRatio,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.wox.simulation.entity.group.CombinationPosition">
+        insert into combination_position
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+			<if test="combinationId != null">
+                combination_id,
+            </if>
+			<if test="stockName != null">
+                stock_name,
+            </if>
+			<if test="stockCode != null">
+                stock_code,
+            </if>
+			<if test="stockMarket != null">
+                stock_market,
+            </if>
+			<if test="usableStockNum != null">
+                usable_stock_num,
+            </if>
+            <if test="positionStockNum != null">
+                position_stock_num,
+            </if>
+			<if test="initialPosition != null">
+                initial_position,
+            </if>
+			<if test="endPosition != null">
+                end_position,
+            </if>
+			<if test="costPrice != null">
+                cost_price,
+            </if>
+			<if test="marketPrice != null">
+                market_price,
+            </if>
+			<if test="profitLossAmount != null">
+                profit_loss_amount,
+            </if>
+			<if test="profitLossRatio != null">
+                profit_loss_ratio,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+			<if test="combinationId != null">
+                #{combinationId,jdbcType=VARCHAR},
+            </if>
+			<if test="stockName != null">
+                #{stockName,jdbcType=VARCHAR},
+            </if>
+			<if test="stockCode != null">
+                #{stockCode,jdbcType=VARCHAR},
+            </if>
+			<if test="stockMarket != null">
+                #{stockMarket,jdbcType=VARCHAR},
+            </if>
+			<if test="usableStockNum != null">
+                #{usableStockNum,jdbcType=VARCHAR},
+            </if>
+			<if test="positionStockNum != null">
+                #{positionStockNum,jdbcType=VARCHAR},
+            </if>
+			<if test="initialPosition != null">
+                #{initialPosition,jdbcType=VARCHAR},
+            </if>
+			<if test="endPosition != null">
+                #{endPosition,jdbcType=VARCHAR},
+            </if>
+			<if test="costPrice != null">
+                #{costPrice,jdbcType=VARCHAR},
+            </if>
+			<if test="marketPrice != null">
+                #{marketPrice,jdbcType=VARCHAR},
+            </if>
+			<if test="profitLossAmount != null">
+                #{profitLossAmount,jdbcType=VARCHAR},
+            </if>
+            <if test="profitLossRatio != null">
+                #{profitLossRatio,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.wox.simulation.entity.group.CombinationPositionExample" resultType="java.lang.Integer">
+        select count(*) from combination_position
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update combination_position
+        <set>
+			<if test="record.id != null">
+                id = #{record.id,jdbcType=BIGINT},
+            </if>
+			<if test="record.combinationId != null">
+                combination_id = #{record.combinationId,jdbcType=VARCHAR},
+            </if>
+			<if test="record.stockName != null">
+                stock_name = #{record.stockName,jdbcType=VARCHAR},
+            </if>
+			<if test="record.stockCode != null">
+                stock_code = #{record.stockCode,jdbcType=VARCHAR},
+            </if>
+			<if test="record.stockMarket != null">
+                stock_market = #{record.stockMarket,jdbcType=VARCHAR},
+            </if>
+			<if test="record.usableStockNum != null">
+                usable_stock_num = #{record.usableStockNum,jdbcType=VARCHAR},
+            </if>
+            <if test="record.positionStockNum != null">
+                position_stock_num = #{record.positionStockNum,jdbcType=VARCHAR},
+            </if>
+			<if test="record.initialPosition != null">
+                initial_position = #{record.initialPosition,jdbcType=VARCHAR},
+            </if>
+			<if test="record.endPosition != null">
+                end_position = #{record.endPosition,jdbcType=VARCHAR},
+            </if>
+			<if test="record.costPrice != null">
+                cost_price = #{record.costPrice,jdbcType=VARCHAR},
+            </if>
+			<if test="record.marketPrice != null">
+                market_price = #{record.marketPrice,jdbcType=VARCHAR},
+            </if>
+			<if test="record.profitLossAmount != null">
+                profit_loss_amount = #{record.profitLossAmount,jdbcType=VARCHAR},
+            </if>
+			<if test="record.profitLossRatio != null">
+                profit_loss_ratio = #{record.profitLossRatio,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createTime != null">
+                create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.updateTime != null">
+                update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update combination_position
+        set id = #{record.id,jdbcType=BIGINT},
+        combination_id = #{record.combinationId,jdbcType=VARCHAR},
+        stock_name = #{record.stockName,jdbcType=VARCHAR},
+        stock_code = #{record.stockCode,jdbcType=VARCHAR},
+        stock_market = #{record.stockMarket,jdbcType=VARCHAR},
+        usable_stock_num = #{record.usableStockNum,jdbcType=VARCHAR},
+        position_stock_num = #{record.positionStockNum,jdbcType=VARCHAR},
+        initial_position = #{record.initialPosition,jdbcType=VARCHAR},
+        end_position = #{record.endPosition,jdbcType=VARCHAR},
+        cost_price = #{record.costPrice,jdbcType=VARCHAR},
+        market_price = #{record.marketPrice,jdbcType=VARCHAR},
+        profit_loss_amount = #{record.profitLossAmount,jdbcType=VARCHAR},
+        profit_loss_ratio = #{record.profitLossRatio,jdbcType=VARCHAR},
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wox.simulation.entity.group.CombinationPosition">
+        update combination_position
+        <set>
+			<if test="combinationId != null">
+                #{combinationId,jdbcType=VARCHAR},
+            </if>
+			<if test="stockName != null">
+                #{stockName,jdbcType=VARCHAR},
+            </if>
+			<if test="stockCode != null">
+                #{stockCode,jdbcType=VARCHAR},
+            </if>
+			<if test="stockMarket != null">
+                #{stockMarket,jdbcType=VARCHAR},
+            </if>
+			<if test="usableStockNum != null">
+                #{usableStockNum,jdbcType=VARCHAR},
+            </if>
+			<if test="positionStockNum != null">
+                #{positionStockNum,jdbcType=VARCHAR},
+            </if>
+			<if test="initialPosition != null">
+                #{initialPosition,jdbcType=VARCHAR},
+            </if>
+			<if test="endPosition != null">
+                #{endPosition,jdbcType=VARCHAR},
+            </if>
+			<if test="costPrice != null">
+                #{costPrice,jdbcType=VARCHAR},
+            </if>
+			<if test="marketPrice != null">
+                #{marketPrice,jdbcType=VARCHAR},
+            </if>
+			<if test="profitLossAmount != null">
+                #{profitLossAmount,jdbcType=VARCHAR},
+            </if>
+            <if test="profitLossRatio != null">
+                #{profitLossRatio,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wox.simulation.entity.group.CombinationPosition">
+        update combination_position
+        set combination_id = #{record.combinationId,jdbcType=VARCHAR},
+        stock_name = #{record.stockName,jdbcType=VARCHAR},
+        stock_code = #{record.stockCode,jdbcType=VARCHAR},
+        stock_market = #{record.stockMarket,jdbcType=VARCHAR},
+        usable_stock_num = #{record.usableStockNum,jdbcType=VARCHAR},
+        position_stock_num = #{record.positionStockNum,jdbcType=VARCHAR},
+        initial_position = #{record.initialPosition,jdbcType=VARCHAR},
+        end_position = #{record.endPosition,jdbcType=VARCHAR},
+        cost_price = #{record.costPrice,jdbcType=VARCHAR},
+        market_price = #{record.marketPrice,jdbcType=VARCHAR},
+        profit_loss_amount = #{record.profitLossAmount,jdbcType=VARCHAR},
+        profit_loss_ratio = #{record.profitLossRatio,jdbcType=VARCHAR},
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+</mapper>
