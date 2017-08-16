@@ -1,6 +1,5 @@
 package com.wox.simulation.service;
 
-import com.wox.simulation.entity.User;
 import com.wox.simulation.exception.UserException;
 import com.wox.simulation.util.DataResult;
 
@@ -27,5 +26,16 @@ public interface UserService {
 	 */
 	DataResult<?> checkUser(String userid) throws UserException;
 	
-	DataResult<?> authentication(User user);
+	/**
+	 * 
+	 * 描述：
+	 * @author wuhaixu
+	 * @created 2017年8月16日21:06:43
+	 * @since 
+	 * @param username
+	 * @param password
+	 * @return
+	 * @throws UserException
+	 */
+	DataResult<?> authentication(String username, String password) throws UserException ;
 }
