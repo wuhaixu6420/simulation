@@ -31,7 +31,7 @@ import com.wox.simulation.common.BaseConstant;
  * @created 2017年8月16日23:16:46
  * @since
  */
-public class RSAUtilswww
+public class RSAUtils
 {
 	/** 可以先注册到虚拟机中,再通过名称使用;也可以不注册,直接传入使用 */
 	public static final Provider pro = new BouncyCastleProvider();
@@ -202,7 +202,7 @@ public class RSAUtilswww
 		String priExponentStr = BaseConstant.RSA_PRIVATE_EXPONENT;
 		byte[] modulusArray = new BigInteger(modulusStr, 16).toByteArray();
 		byte[] priExponentArray = new BigInteger(priExponentStr, 16).toByteArray();
-		RSAPrivateKey privateKey = RSAUtilswww.generateRSAPrivateKey(modulusArray, priExponentArray);
+		RSAPrivateKey privateKey = RSAUtils.generateRSAPrivateKey(modulusArray, priExponentArray);
 		byte[] input = Hex.decode(raw);
 		byte[] byRaw = decrypt(privateKey,input);
 		// 标志位为0之后的是输入的有效字节
@@ -227,7 +227,7 @@ public class RSAUtilswww
 		String pubExponentStr = BaseConstant.RSA_PUBLIC_EXPONENT;
 		byte[] modulusArray = new BigInteger(modulusStr, 16).toByteArray();
 		byte[] pubExponentArray = new BigInteger(pubExponentStr, 16).toByteArray();
-		RSAPublicKey publicKey = RSAUtilswww.generateRSAPublicKey(modulusArray, pubExponentArray);
+		RSAPublicKey publicKey = RSAUtils.generateRSAPublicKey(modulusArray, pubExponentArray);
 		byte[] byRaw = encrypt(publicKey, raw.getBytes(charSet));
 		byte[] data = Hex.encode(byRaw);
 		return new String(data, charSet);
@@ -240,7 +240,7 @@ public class RSAUtilswww
 	{
 		byte[] modulusArray = new BigInteger(modulusStr, 16).toByteArray();
 		byte[] pubExponentArray = new BigInteger(pubExponentStr, 16).toByteArray();
-		RSAPublicKey publicKey = RSAUtilswww.generateRSAPublicKey(modulusArray, pubExponentArray);
+		RSAPublicKey publicKey = RSAUtils.generateRSAPublicKey(modulusArray, pubExponentArray);
 		byte[] byRaw = encrypt(publicKey, raw.getBytes(charSet));
 		byte[] data = Hex.encode(byRaw);
 		return new String(data, charSet);

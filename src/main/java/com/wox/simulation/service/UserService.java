@@ -28,7 +28,7 @@ public interface UserService {
 	
 	/**
 	 * 
-	 * 描述：
+	 * 描述：登录检查
 	 * @author wuhaixu
 	 * @created 2017年8月16日21:06:43
 	 * @since 
@@ -36,6 +36,22 @@ public interface UserService {
 	 * @param password
 	 * @return
 	 * @throws UserException
+	 * @throws Exception 
 	 */
-	DataResult<?> authentication(String username, String password) throws UserException ;
+	DataResult<?> authentication(String username, String password) throws UserException, Exception;
+	
+	/**
+	 * 
+	 * 描述：创建用户
+	 * @author wuhaixu
+	 * @created 2017年8月17日 下午3:05:04
+	 * @since 
+	 * @param name
+	 * @param username
+	 * @param password
+	 * @return
+	 * @throws UserException
+	 * @throws Exception 
+	 */
+	DataResult<?> createUser(String name, String username, String password) throws UserException, Exception;
 }
