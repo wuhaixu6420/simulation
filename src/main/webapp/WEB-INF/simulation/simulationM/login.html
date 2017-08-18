@@ -108,5 +108,33 @@
 				</div>
 			</div>
 		</div>
+		<script src="https://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+		<script src="js/config.js"></script>
+		<script src="js/wox.user.1.0.js"></script>
+		<script src="js/encryption/security.js"></script>
+		<script>
+			$(function(){
+				$("#login").click(function(){
+					var username = $("#account").val();
+					if(username == null || username.trim() == ""){
+						alert("请输入您的账户");
+						return false;
+					}
+					var password = $("#password").val();
+					if(password == null || password.trim() == ""){
+						alert("请输入您的密码");
+						return false;
+					}
+					user.rsa(function(result){
+						var exponent = result.public;
+						var modulus = result.modulus;
+						var key = RSAUtils.getKeyPair(exponent, '', modulus);
+						var encryption = RSAUtils.encryptedString(key, encodeURIComponent(password));
+						var param = 'username=' + username + '&password=' + encryption;
+						user.login(param);
+					});
+				});
+			});
+		</script>
 	</body>
 </html>

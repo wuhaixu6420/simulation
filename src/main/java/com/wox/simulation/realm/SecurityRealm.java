@@ -58,7 +58,7 @@ public class SecurityRealm extends AuthorizingRealm {
 			dataResult = userService.authentication(username, password);
 			if (dataResult.isType()) {
 				User user = (User) dataResult.getData();
-				authenticationInfo = new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), getName());
+				authenticationInfo = new SimpleAuthenticationInfo(user.getUsername(), password, getName());
 			} else {
 				logger.info("用户验证失败");
 			}

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -61,23 +62,27 @@ public class UserServiceImpl implements UserService{
 		//考虑password是前端加密传值
 		//前端RSA加密，所以后端进行解密
 		//明文密码--->使用RSA解密前端加密的密文
-		String expressPassword = RSAUtils.decrypt(password);
-		//密文密码--->使用MD5加密明文
-		String ciphertextPassword = MD5Utils.getEncryptedPwd(expressPassword);
-		//需要考虑前端使用rsa进行加密，所以需要添加rsa加密接口
-		userExample.createCriteria().andUsernameEqualTo(username).andPasswordEqualTo(ciphertextPassword);
+		//js前端传值，是密码的反值，需要翻转密码
+		String expressPassword = StringUtils.reverse(RSAUtils.decrypt(password));
+//		//密文密码--->使用MD5加密明文
+//		String ciphertextPassword = MD5Utils.getEncryptedPwd(expressPassword);
+		//通过账户查询用户，然后那查询的用户密码  和解密后的进行对比
+		userExample.createCriteria().andUsernameEqualTo(username);
 		//查询用户
 		List<User> userList = userMapper.selectByExample(userExample);
 		if(ObjectUtil.isEmpty(userList) || userList.isEmpty()){
-			return new DataResult<String>(false, ObjectUtil.convert("当前用户id，不存在用户。"));
+			return new DataResult<String>(false, "当前账户，不存在用户。");
 		}
-		//检查考虑是否进行用户登录
-		//TODO
-		 UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-		 Subject subject = SecurityUtils.getSubject();
-		 subject.login(token);
-		//用户id唯一，用户唯一
-		return new DataResult<User>(true, userList.get(0));
+		//获取用户信息
+		User user = userList.get(0);
+		if(MD5Utils.validPassword(expressPassword, user.getPassword())){
+			//用户id唯一，用户唯一
+			//防止密码丢失
+			user.setPassword("******");
+			return new DataResult<User>(true, user);
+		} else {
+			return new DataResult<String>(true, "密码错误");
+		}
 	}
 
 	@Override
@@ -99,7 +104,7 @@ public class UserServiceImpl implements UserService{
 		user.setUsername(username);
 		//前端RSA加密，所以后端进行解密
 		//明文密码--->使用RSA解密前端加密的密文
-		String expressPassword = RSAUtils.decrypt(password);
+		String expressPassword = StringUtils.reverse(RSAUtils.decrypt(password));
 		//密文密码--->使用MD5加密明文
 		String ciphertextPassword = MD5Utils.getEncryptedPwd(expressPassword);
 		//密码
@@ -111,6 +116,21 @@ public class UserServiceImpl implements UserService{
 		} else {
 			throw new UserException("用户创建失败");
 		}
+	}
+
+	@Override
+	public DataResult<?> login(String username, String password) throws UserException, Exception {
+		//先验证用户
+		DataResult<?> dataResult = authentication(username, password);
+		if(dataResult.isType()){
+			//如果成功，登录
+			//检查考虑是否进行用户登录
+			//TODO
+			UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+			Subject subject = SecurityUtils.getSubject();
+			subject.login(token);
+		}
+		return dataResult;
 	}
 
 }

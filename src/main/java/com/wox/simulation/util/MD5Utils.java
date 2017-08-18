@@ -123,4 +123,12 @@ public class MD5Utils {
 		// 将字节数组格式加密后的口令转化为16进制字符串格式的口令
 		return byteToHexString(pwd);
 	}
+	
+	public static void main(String[] args) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+		String miwen = getEncryptedPwd("wox666");
+		System.out.println(miwen);
+		System.out.println(miwen.length());
+		Boolean valid = validPassword("wox666", miwen);
+		System.out.println(valid);
+	}
 }

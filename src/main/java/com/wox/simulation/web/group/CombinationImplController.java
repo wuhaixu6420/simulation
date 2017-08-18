@@ -3,6 +3,7 @@ package com.wox.simulation.web.group;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,22 +38,26 @@ public class CombinationImplController extends BaseController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/ranking", method=RequestMethod.GET)
+	@RequestMapping(value = "/ranking", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE + CHARSET)
 	@ResponseBody
-	public DataResult<?> combinationRanking(HttpServletRequest request){
+	public String combinationRanking(HttpServletRequest request){
+		DataResult<?> dataResult = null;
+		String callback = request.getParameter("callback");
 		String falg = request.getParameter("falg");
 		if(ObjectUtil.isEmpty(falg)){
-			return new DataResult<String>(false, "没有查询标志");
+			dataResult = new DataResult<String>(false, "没有查询标志");
+			return ObjectUtil.jsonp(callback, dataResult);
 		}
 		String pageNo = request.getParameter("pageNo");
 		if(ObjectUtil.isEmpty(pageNo)){
-			return new DataResult<String>(false, "没有查询页码");
+			dataResult = new DataResult<String>(false, "没有查询页码");
+			return ObjectUtil.jsonp(callback, dataResult);
 		}
 		String pageSize = request.getParameter("pageSize");
 		if(ObjectUtil.isEmpty(pageSize)){
-			return new DataResult<String>(false, "没有查询页数");
+			dataResult = new DataResult<String>(false, "没有查询页数");
+			return ObjectUtil.jsonp(callback, dataResult);
 		}
-		DataResult<?> dataResult = null;
 		try {
 			dataResult = combinationService.getCombinationDetailsPageList(falg, pageNo, pageSize);
 		} catch (CombinationException e) {
@@ -60,7 +65,7 @@ public class CombinationImplController extends BaseController {
 		} catch (Exception e) {
 			dataResult = new DataResult<String>(false, e.getMessage());
 		}
-		return dataResult;
+		return ObjectUtil.jsonp(callback, dataResult);
 	}
 	
 	/**
@@ -72,15 +77,17 @@ public class CombinationImplController extends BaseController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/inquiry", method=RequestMethod.GET)
+	@RequestMapping(value = "/inquiry", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE + CHARSET)
 	@ResponseBody
-	public DataResult<?> userCombination(HttpServletRequest request){
+	public String userCombination(HttpServletRequest request){
+		DataResult<?> dataResult = null;
+		String callback = request.getParameter("callback");
 		String userid = request.getParameter("userid");
 		if(ObjectUtil.isEmpty(userid)){
-			return new DataResult<String>(false, "没有用户id");
+			dataResult = new DataResult<String>(false, "没有用户id");
+			return ObjectUtil.jsonp(callback, dataResult);
 		}
 		String combinationId = request.getParameter("combinationId");
-		DataResult<?> dataResult = null;
 		try {
 			dataResult = combinationService.getCombinationDetailsByUserId(userid, combinationId);
 		} catch (CombinationException e) {
@@ -88,25 +95,29 @@ public class CombinationImplController extends BaseController {
 		} catch (Exception e) {
 			dataResult = new DataResult<String>(false, e.getMessage());
 		}
-		return dataResult;
+		return ObjectUtil.jsonp(callback, dataResult);
 	}
 	
-	@RequestMapping(value = "/found", method=RequestMethod.GET)
+	@RequestMapping(value = "/found", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE + CHARSET)
 	@ResponseBody
-	public DataResult<?> creatCombination(HttpServletRequest request){
+	public String creatCombination(HttpServletRequest request){
+		DataResult<?> dataResult = null;
+		String callback = request.getParameter("callback");
 		String userid = request.getParameter("userid");
 		if(ObjectUtil.isEmpty(userid)){
-			return new DataResult<String>(false, "没有用户id");
+			dataResult = new DataResult<String>(false, "没有用户id");
+			return ObjectUtil.jsonp(callback, dataResult);
 		}
 		String combinationName = request.getParameter("combinationName");
 		if(ObjectUtil.isEmpty(combinationName)){
-			return new DataResult<String>(false, "没有组合名称");
+			dataResult = new DataResult<String>(false, "没有组合名称");
+			return ObjectUtil.jsonp(callback, dataResult);
 		}
 		String combinationSynopsis = request.getParameter("combinationSynopsis");
 		if(ObjectUtil.isEmpty(combinationSynopsis)){
-			return new DataResult<String>(false, "没有组合简介");
+			dataResult = new DataResult<String>(false, "没有组合简介");
+			return ObjectUtil.jsonp(callback, dataResult);
 		}
-		DataResult<?> dataResult = null;
 		try {
 			dataResult = combinationService.createCombination(userid, combinationName, combinationSynopsis);
 		} catch (CombinationException e) {
@@ -114,7 +125,7 @@ public class CombinationImplController extends BaseController {
 		} catch (Exception e) {
 			dataResult = new DataResult<String>(false, e.getMessage());
 		}
-		return dataResult;
+		return ObjectUtil.jsonp(callback, dataResult);
 	}
 
 }

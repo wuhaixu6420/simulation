@@ -11,6 +11,8 @@ public class BaseConstant {
 
 	public static final String END = "[end]";
 	
+	protected static final String CHARSET = ";charset=UTF-8";
+	
 	/** 用于获取静态配置值 */
 	private static Properties props = null;
 

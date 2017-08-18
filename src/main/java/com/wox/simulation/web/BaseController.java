@@ -1,5 +1,8 @@
 package com.wox.simulation.web;
 
-public class BaseController {
+import com.wox.simulation.common.BaseConstant;
+
+public class BaseController extends BaseConstant{
+	
 
 }

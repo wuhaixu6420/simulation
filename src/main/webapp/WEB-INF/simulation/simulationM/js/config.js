@@ -16,5 +16,15 @@ var config = {
 	        str+=String.fromCharCode(parseInt(data[i],16).toString(10));
 	    }
 	    return str;
+	},
+	ajax : function(ApiUrl, dataParam, callback){
+		$.ajax({
+			url : ApiUrl,
+			type: "get",
+			dataType : 'jsonp',
+			jsonp: "callback",
+			data : dataParam,
+            success : callback
+		});
 	}
 }

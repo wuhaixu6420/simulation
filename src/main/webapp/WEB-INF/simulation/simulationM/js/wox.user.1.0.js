@@ -9,27 +9,23 @@ var user = {
 		login : '/user/login',
 		//用户注册
 		found : '/user/found',
+		//加密使用
+		getRSA : '/user/getRSA'
 	},
-	ajax : function(ApiUrl, dataParam, callback){
-		$.ajax({
-			url : ApiUrl,
-			type: "get",
-			dataType : 'jsonp',
-			jsonp: "callback",
-			data : dataParam,
-            success : callback
-		});
+	rsa : function(callback){
+		var url = config.crossDomainUrl + user.API.getRSA;
+		var dataParam = "";
+		config.ajax(url, dataParam, callback);
 	},
 	login : function(dataParam){
 		var url = config.crossDomainUrl + user.API.login;
-		user.ajax(url, dataParam, function(result){
+		config.ajax(url, dataParam, function(result){
 			console.log(result);
-			console.log(config.unicodeToChinese(result.data));
 		});
 	},
 	found : function(dataParam){
 		var url = config.crossDomainUrl + user.API.found;
-		user.ajax(url, dataParam, function(result){
+		config.ajax(url, dataParam, function(result){
 			console.log(result);
 		});
 	}
