@@ -64,8 +64,7 @@ public class UserServiceImpl implements UserService{
 		//明文密码--->使用RSA解密前端加密的密文
 		//js前端传值，是密码的反值，需要翻转密码
 		String expressPassword = StringUtils.reverse(RSAUtils.decrypt(password));
-//		//密文密码--->使用MD5加密明文
-//		String ciphertextPassword = MD5Utils.getEncryptedPwd(expressPassword);
+		//密文密码--->使用MD5加密明文
 		//通过账户查询用户，然后那查询的用户密码  和解密后的进行对比
 		userExample.createCriteria().andUsernameEqualTo(username);
 		//查询用户
@@ -120,7 +119,7 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public DataResult<?> login(String username, String password) throws UserException, Exception {
-		//先验证用户
+		//先验证用户，如果登录和验证一起，那shiro验证的时候将会无线循环。
 		DataResult<?> dataResult = authentication(username, password);
 		if(dataResult.isType()){
 			//如果成功，登录
