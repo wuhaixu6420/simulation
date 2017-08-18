@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService{
 		//查询用户
 		List<User> userList = userMapper.selectByExample(userExample);
 		if(ObjectUtil.isEmpty(userList) || userList.isEmpty()){
-			return new DataResult<String>(false, "当前用户id，不存在用户。");
+			return new DataResult<String>(false, ObjectUtil.convert("当前用户id，不存在用户。"));
 		}
 		//检查考虑是否进行用户登录
 		//TODO

@@ -36,18 +36,21 @@ public class UserImplController extends BaseController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/login", method=RequestMethod.POST)
+	@RequestMapping(value = "/login", method=RequestMethod.GET)
 	@ResponseBody
-	public DataResult<?> userLogin(HttpServletRequest request){
+	public String userLogin(HttpServletRequest request){
+		DataResult<?> dataResult = null;
+		String callback = request.getParameter("callback");
 		String username = request.getParameter("username");
 		if(ObjectUtil.isEmpty(username)){
-			return new DataResult<String>(false, "请输入用户名");
+			dataResult = new DataResult<String>(false, "请输入用户名");
+			return ObjectUtil.jsonp(callback, dataResult);
 		}
 		String password = request.getParameter("password");
 		if(ObjectUtil.isEmpty(password)){
-			return new DataResult<String>(false, "请输入密码用户名");
+			dataResult = new DataResult<String>(false, "请输入密码用户名");
+			return ObjectUtil.jsonp(callback, dataResult);
 		}
-		DataResult<?> dataResult = null;
 		try {
 			dataResult = userService.authentication(username, password);
 		} catch (UserException e) {
@@ -55,7 +58,7 @@ public class UserImplController extends BaseController {
 		} catch (Exception e){
 			dataResult = new DataResult<String>(false, e.getMessage());
 		}
-		return dataResult;
+		return ObjectUtil.jsonp(callback, dataResult);
 	}
 	
 	/**
@@ -67,7 +70,7 @@ public class UserImplController extends BaseController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/found", method=RequestMethod.POST)
+	@RequestMapping(value = "/found", method=RequestMethod.GET)
 	@ResponseBody
 	public DataResult<?> createUser(HttpServletRequest request){
 		//昵称
