@@ -17,16 +17,12 @@ var user = {
 		var dataParam = "";
 		config.ajax(url, dataParam, callback);
 	},
-	login : function(dataParam){
+	login : function(dataParam, callback){
 		var url = config.crossDomainUrl + user.API.login;
-		config.ajax(url, dataParam, function(result){
-			console.log(result);
-		});
+		config.ajax(url, dataParam, callback);
 	},
-	found : function(dataParam){
+	found : function(dataParam, callback){
 		var url = config.crossDomainUrl + user.API.found;
-		config.ajax(url, dataParam, function(result){
-			console.log(result);
-		});
+		config.ajax(url, dataParamcallback);
 	}
 }

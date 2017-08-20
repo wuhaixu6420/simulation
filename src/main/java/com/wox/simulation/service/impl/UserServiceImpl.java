@@ -1,5 +1,6 @@
 package com.wox.simulation.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -108,6 +109,8 @@ public class UserServiceImpl implements UserService{
 		String ciphertextPassword = MD5Utils.getEncryptedPwd(expressPassword);
 		//密码
 		user.setPassword(ciphertextPassword);
+		//创建时间
+		user.setCreateTime(new Date());
 		//插入用户
 		int count = userMapper.insert(user);
 		if(count == 1){

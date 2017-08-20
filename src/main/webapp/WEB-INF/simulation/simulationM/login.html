@@ -104,25 +104,28 @@
 			</form>
 			<div class="mui-content-padded">
 				<button id='login' class="mui-btn mui-btn-block mui-btn-primary">登录</button>
-				<div class="link-area"><a id='reg'>注册账号</a> <span class="spliter">|</span> <a id='forgetPassword'>忘记密码</a>
+				<div class="link-area"><a href="reg.html">注册账号</a> <span class="spliter">|</span> <a id='forgetPassword'>忘记密码</a>
 				</div>
 			</div>
+			<div id="info"></div>
 		</div>
 		<script src="https://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
 		<script src="js/config.js"></script>
 		<script src="js/wox.user.1.0.js"></script>
 		<script src="js/encryption/security.js"></script>
+		<script src="js/mui.min.js"></script>
 		<script>
 			$(function(){
+				var info = document.getElementById("info");
 				$("#login").click(function(){
 					var username = $("#account").val();
 					if(username == null || username.trim() == ""){
-						alert("请输入您的账户");
+						mui.alert('请输入您的账户', '提示');
 						return false;
 					}
 					var password = $("#password").val();
 					if(password == null || password.trim() == ""){
-						alert("请输入您的密码");
+						mui.alert('请输入您的密码', '提示');
 						return false;
 					}
 					user.rsa(function(result){
@@ -131,7 +134,17 @@
 						var key = RSAUtils.getKeyPair(exponent, '', modulus);
 						var encryption = RSAUtils.encryptedString(key, encodeURIComponent(password));
 						var param = 'username=' + username + '&password=' + encryption;
-						user.login(param);
+						user.login(param, function(result){
+							console.log(result);
+							//验证没有通过
+							if(!result.type){
+								mui.alert(result.data, '提示');
+								return false;
+							} else {
+								mui.alert("登录成功", '提示');
+								window.location.href='http://www.baidu.com';
+							}
+						});
 					});
 				});
 			});

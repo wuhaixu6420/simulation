@@ -65,6 +65,7 @@
 			<div class="mui-content-padded">
 				<p>测试使用说明段落</p>
 			</div>
+			<div id="info"></div>
 		</div>
 		<!--
         	作者：wox666@sina.com
@@ -75,34 +76,34 @@
 		<script src="js/config.js"></script>
 		<script src="js/wox.user.1.0.js"></script>
 		<script src="js/encryption/security.js"></script>
+		<script src="js/mui.min.js"></script>
 		<script>
 			$(function(){
 				$("#reg").click(function(){
 					var name = $("#name").val();
 					if(name == null || name.trim() == ""){
-						alert("请输入您的昵称");
+						mui.alert('请输入您的昵称', '提示');
 						return false;
 					}
 					var username = $("#account").val();
 					if(username == null || username.trim() == ""){
-						alert("请输入您的账户");
+						mui.alert('请输入您的账户', '提示');
 						return false;
 					}
 					var password = $("#password").val();
 					if(password == null || password.trim() == ""){
-						alert("请输入您的密码");
+						mui.alert('请输入您的密码', '提示');
 						return false;
 					}
 					var checkpassword = $("#checkpassword").val();
 					if(checkpassword == null || checkpassword.trim() == ""){
-						alert("请输入您的确认密码");
+						mui.alert('请输入您的确认密码', '提示');
 						return false;
 					}
 					if(password.trim() != checkpassword.trim()){
-						alert("请确认您的密码");
+						mui.alert('请确认您的密码', '提示');
 						return false;
 					}
-					var param = 'username=123123&password=123123';
 					user.rsa(function(result){
 						var exponent = result.public;
 						var modulus = result.modulus;
@@ -110,7 +111,17 @@
 						var encryption = RSAUtils.encryptedString(key, encodeURIComponent(password));
 						var checkencryption = RSAUtils.encryptedString(key, encodeURIComponent(checkpassword));
 						var param = 'name=' + encodeURI(encodeURI(name)) + '&username=' + username + '&password=' + encryption + '&checkpassword=' + checkencryption;
-						user.found(param);
+						user.found(param, function(result){
+							console.log(result);
+							//验证没有通过
+							if(!result.type){
+								mui.alert(result.data, '提示');
+								return false;
+							} else {
+								mui.alert("注册成功", '提示');
+								window.location.href='login.html';
+							}
+						});
 					});
 				});
 			});

@@ -49,12 +49,12 @@ public class UserImplController extends BaseController {
 		String callback = request.getParameter("callback");
 		String username = request.getParameter("username");
 		if(ObjectUtil.isEmpty(username)){
-			dataResult = new DataResult<String>(false, "请输入用户名");
+			dataResult = new DataResult<String>(false, "请输入账户");
 			return ObjectUtil.jsonp(callback, dataResult);
 		}
 		String password = request.getParameter("password");
 		if(ObjectUtil.isEmpty(password)){
-			dataResult = new DataResult<String>(false, "请输入密码用户名");
+			dataResult = new DataResult<String>(false, "请输入密码");
 			return ObjectUtil.jsonp(callback, dataResult);
 		}
 		try {
@@ -91,7 +91,7 @@ public class UserImplController extends BaseController {
 		//用户名
 		String username = request.getParameter("username");
 		if(ObjectUtil.isEmpty(username)){
-			dataResult = new DataResult<String>(false, "请输入用户名");
+			dataResult = new DataResult<String>(false, "请输入账户");
 			return ObjectUtil.jsonp(callback, dataResult);
 		}
 		//密码
