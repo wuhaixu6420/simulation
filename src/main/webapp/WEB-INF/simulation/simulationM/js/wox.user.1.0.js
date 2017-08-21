@@ -15,14 +15,14 @@ var user = {
 	rsa : function(callback){
 		var url = config.crossDomainUrl + user.API.getRSA;
 		var dataParam = "";
-		config.ajax(url, dataParam, callback);
+		config.ajaxJsonp(url, dataParam, callback);
 	},
 	login : function(dataParam, callback){
 		var url = config.crossDomainUrl + user.API.login;
-		config.ajax(url, dataParam, callback);
+		config.ajaxJsonp(url, dataParam, callback);
 	},
 	found : function(dataParam, callback){
 		var url = config.crossDomainUrl + user.API.found;
-		config.ajax(url, dataParamcallback);
+		config.ajaxJsonp(url, dataParamcallback);
 	}
 }

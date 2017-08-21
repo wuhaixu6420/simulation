@@ -103,11 +103,11 @@
     	时间：2017-08-21
     	描述：首页置顶信息
     -->
-    <div class="mui-content">
+    <div class="mui-content" style="margin-bottom: 50px;">
     	<ul class="mui-table-view mui-grid-view mui-grid-9">
             <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4"><a href="#">
                 <h4 style="color: red;">3500.45</h4>
-                <div class="mui-media-body">上证指数</div><div class="mui-media-body">上证指数</div></a></li>
+                <div class="mui-media-body">上证指数</div>
             <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4"><a href="#">
                 <h4 style="color: red;">10054.00</h4>
                 <div class="mui-media-body">深证指数</div></a></li>
@@ -115,39 +115,95 @@
                 <h4 style="color: red;">2540.24</h4>
                 <div class="mui-media-body">创业板</div></a></li>
 		</ul>
-    </div>
-	
-	
-	
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell">
+					<span style="color: red;">推荐组合</span>
+			</li>
+			<li class="mui-table-view-cell mui-media">
+				<a href="javascript:;">
+					<img class="mui-media-object mui-pull-left" src="images/shuijiao.jpg">
+					<div class="mui-media-body">
+						组合A
+						<p class='mui-ellipsis'>能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？</p>
+					</div>
+				</a>
+			</li>
+			<li class="mui-table-view-cell mui-media">
+				<a href="javascript:;">
+					<div>
+						<span class="mui-icon mui-icon-contact" style="color: #999999;"></span>
+						<!--border-radius:5px-->
+						<img class="mui-media-object mui-pull-left" style="border-radius:12px; width: 21px; height: 21px; top: 1px;" src="images/muwu.jpg">
+					</div>
+					<img class="mui-media-object mui-pull-left" src="images/muwu.jpg">
+					<div class="mui-media-body">
+						组合B
+						<p class='mui-ellipsis'>想要这样一间小木屋，夏天挫冰吃瓜，冬天围炉取暖.</p>
+					</div>
+				</a>
+			</li>
+			<li class="mui-table-view-cell mui-media">
+				<a href="javascript:;">
+					<img class="mui-media-object mui-pull-left" src="images/cbd.jpg">
+					<div class="mui-media-body">
+						组合C
+						<p class='mui-ellipsis'>烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
+					</div>
+				</a>
+			</li>
+		</ul>
+	</div>
 	<!--
     	作者：wuhaixu
     	时间：2017-08-21
     	描述：底部导航
     -->
-	<nav class="mui-bar mui-bar-tab">
-		<a class="mui-tab-item mui-active" href="#tabbar">
-			<span class="mui-icon mui-icon-home"></span>
-			<span class="mui-tab-label">首页</span>
+    <div id="message" class="mui-popover mui-popover-action mui-popover-bottom">
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell">
+				<a href="#">组合</a>
+			</li>
+		</ul>
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell">
+				<a href="#message"><b>取消</b></a>
+			</li>
+		</ul>
+	</div>
+	<div id="userInfo" class="mui-popover mui-popover-action mui-popover-bottom">
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell">
+				<a href="setting.html">用户信息</a>
+			</li>
+		</ul>
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell">
+				<a href="#userInfo"><b>取消</b></a>
+			</li>
+		</ul>
+	</div>
+    <nav class="mui-bar mui-bar-tab">
+		<a class="mui-tab-item" href="#message">
+			<span class="mui-icon mui-icon-email"></span>
+			<span class="mui-tab-label">详情</span>
 		</a>
-		<a class="mui-tab-item" href="#tabbar-with-chat">
-			<span class="mui-icon mui-icon-email"><span class="mui-badge">9</span></span>
-			<span class="mui-tab-label">消息</span>
-		</a>
-		<a class="mui-tab-item" href="#tabbar-with-contact">
-			<span class="mui-icon mui-icon-contact"></span>
-			<span class="mui-tab-label">通讯录</span>
-		</a>
-		<a class="mui-tab-item" href="#tabbar-with-map">
+		<a class="mui-tab-item" href="#userInfo">
 			<span class="mui-icon mui-icon-gear"></span>
 			<span class="mui-tab-label">设置</span>
 		</a>
 	</nav>
+	<script src="https://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
 	<script src="js/mui.min.js"></script>
+	<script src="js/config.js"></script>
+	<!--<script type="text/javascript" src="http://hq.sinajs.cn/list=s_sh000001,s_sz399001,s_sz399006" charset="gb2312"></script>-->
 	<script>
 		var slider = mui("#slider");
 		slider.slider({
 			interval: 5000
 		});
+//		console.log(hq_str_s_sh000001);
+//		console.log(hq_str_s_sz399001);
+//		console.log(hq_str_s_sz399006);
 	</script>
 </body>
 </html>

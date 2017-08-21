@@ -17,7 +17,7 @@ var config = {
 	    }
 	    return str;
 	},
-	ajax : function(ApiUrl, dataParam, callback){
+	ajaxJsonp : function(ApiUrl, dataParam, callback){
 		$.ajax({
 			url : ApiUrl,
 			type: "get",
@@ -26,5 +26,11 @@ var config = {
 			data : dataParam,
             success : callback
 		});
+	},
+	ajaxGet : function(url, dataParam, callback){
+		$.get(url, dataParam, callback);
+	},
+	timing : function(){
+		window.setInterval(xueqiuTest,1000);
 	}
 }
