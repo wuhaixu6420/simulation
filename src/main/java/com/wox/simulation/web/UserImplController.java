@@ -48,12 +48,12 @@ public class UserImplController extends BaseController {
 		DataResult<?> dataResult = null;
 		String callback = request.getParameter("callback");
 		String username = request.getParameter("username");
-		if(ObjectUtil.isEmpty(username)){
+		if(ObjectUtil.isEmpty(username) || "null".equals(username)){
 			dataResult = new DataResult<String>(false, "请输入账户");
 			return ObjectUtil.jsonp(callback, dataResult);
 		}
 		String password = request.getParameter("password");
-		if(ObjectUtil.isEmpty(password)){
+		if(ObjectUtil.isEmpty(password) || "null".equals(password)){
 			dataResult = new DataResult<String>(false, "请输入密码");
 			return ObjectUtil.jsonp(callback, dataResult);
 		}
@@ -84,25 +84,25 @@ public class UserImplController extends BaseController {
 		String callback = request.getParameter("callback");
 		//昵称
 		String name = URLDecoder.decode(request.getParameter("name"), "utf-8");;
-		if(ObjectUtil.isEmpty(name)){
+		if(ObjectUtil.isEmpty(name) || "null".equals(name)){
 			dataResult = new DataResult<String>(false, "请输入昵称");
 			return ObjectUtil.jsonp(callback, dataResult);
 		}
 		//用户名
 		String username = request.getParameter("username");
-		if(ObjectUtil.isEmpty(username)){
+		if(ObjectUtil.isEmpty(username) || "null".equals(username)){
 			dataResult = new DataResult<String>(false, "请输入账户");
 			return ObjectUtil.jsonp(callback, dataResult);
 		}
 		//密码
 		String password = request.getParameter("password");
-		if(ObjectUtil.isEmpty(password)){
+		if(ObjectUtil.isEmpty(password) || "null".equals(password)){
 			dataResult = new DataResult<String>(false, "请输入密码");
 			return ObjectUtil.jsonp(callback, dataResult);
 		}
 		//确认密码
 		String checkpassword = request.getParameter("checkpassword");
-		if(ObjectUtil.isEmpty(checkpassword)){
+		if(ObjectUtil.isEmpty(checkpassword) || "null".equals(checkpassword)){
 			dataResult = new DataResult<String>(false, "请输入确认密码");
 			return ObjectUtil.jsonp(callback, dataResult);
 		}
@@ -122,7 +122,15 @@ public class UserImplController extends BaseController {
 		return ObjectUtil.jsonp(callback, dataResult);
 	}
 	
-	
+	/**
+	 * 
+	 * 描述：获取RSA加密的公钥和模
+	 * @author wuhaixu
+	 * @created 2017年8月24日 下午1:44:27
+	 * @since 
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value = "/getRSA", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE + CHARSET)
 	@ResponseBody
 	public String getRSA(HttpServletRequest request){
@@ -132,4 +140,30 @@ public class UserImplController extends BaseController {
 		jsonObject.put("public", RSA_PUBLIC_EXPONENT);
 		return ObjectUtil.jsonp(callback, jsonObject);
 	}
+	
+	/**
+	 * 
+	 * 描述：验证是否登陆
+	 * 因为jsonp的登陆模式，所以需要用户登录验证
+	 * @author wuhaixu
+	 * @created 2017年8月24日 下午1:46:04
+	 * @since 
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/checkLogin", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE + CHARSET)
+	@ResponseBody
+	public String checkLogin(HttpServletRequest request){
+		String callback = request.getParameter("callback");
+		//考虑专门使用一个表来记录登陆状态
+		
+		return ObjectUtil.jsonp(callback, "");
+	}
+	
+	
+	
+	
+	
+	
+	
 }

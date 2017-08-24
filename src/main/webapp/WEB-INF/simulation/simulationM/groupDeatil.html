@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>组合</title>
+    <link rel="stylesheet" href="css/mui.min.css">
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		<h1 class="mui-title">我的组合</h1>
+	</header>
+	<div class="mui-content">
+		<div id="groupOne">该用户单个组合</div>
+		<p></p>
+		<div id="groupAll">该用户全部组合</div>
+	</div>
+	<script src="https://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+	<script src="js/mui.min.js"></script>
+	<script src="js/config.js"></script>
+	<script src="js/group/wox.combination.1.0.js"></script>
+	<script>
+		var param = "userid=4"
+		group.queryInquiry(param, function(result){
+			console.log(result);
+			if(!result.type){
+				mui.alert(result.data, '提示');
+				return false;
+			} else {
+				var foreachList = result.data.result;
+				for(var i=0; i<foreachList.length; i++){
+					console.log("组合信息");
+					console.log(foreachList[i].combinationDetails);
+					console.log("组合持仓信息");
+					console.log(foreachList[i].positionList);
+					
+					//如果查询不到值，就不会显示key value
+					var str = "<p>组合id：" + foreachList[i].combinationDetails.id
+					+ "\n组合名称：" + foreachList[i].combinationDetails.combinationName
+					+ "\n组合简介：" + foreachList[i].combinationDetails.combinationSynopsis
+					+ "\n组合余额：" + foreachList[i].combinationDetails.combinationBalance
+					+ "\n组合市值：" + foreachList[i].combinationDetails.totalMarketValue
+					+ "\n组合总收益：" + foreachList[i].combinationDetails.totalProfit
+					+ "\n组合月收益：" + foreachList[i].combinationDetails.monthProfit
+					+ "\n组合日收益：" + foreachList[i].combinationDetails.weekProfit
+					+ "\n组合今日收益：" + foreachList[i].combinationDetails.todayProfit
+					+ "</p>";
+					console.log(str);
+					$("#groupAll").append(str);
+				}
+			}
+		});
+		
+		
+		param = param + "&combinationId=4";
+		group.queryInquiry(param, function(result){
+			console.log(result);
+			if(!result.type){
+				mui.alert(result.data, '提示');
+				return false;
+			} else {
+				var foreachList = result.data.result;
+				for(var i=0; i<foreachList.length; i++){
+					console.log("组合信息");
+					console.log(foreachList[i].combinationDetails);
+					console.log("组合持仓信息");
+					console.log(foreachList[i].positionList);
+					
+					//如果查询不到值，就不会显示key value
+					var str = "<p>组合id：" + foreachList[i].combinationDetails.id
+					+ "\n组合名称：" + foreachList[i].combinationDetails.combinationName
+					+ "\n组合简介：" + foreachList[i].combinationDetails.combinationSynopsis
+					+ "\n组合余额：" + foreachList[i].combinationDetails.combinationBalance
+					+ "\n组合市值：" + foreachList[i].combinationDetails.totalMarketValue
+					+ "\n组合总收益：" + foreachList[i].combinationDetails.totalProfit
+					+ "\n组合月收益：" + foreachList[i].combinationDetails.monthProfit
+					+ "\n组合日收益：" + foreachList[i].combinationDetails.weekProfit
+					+ "\n组合今日收益：" + foreachList[i].combinationDetails.todayProfit
+					+ "</p>";
+					console.log(str);
+					$("#groupOne").append(str);
+				}
+			}
+		});
+	</script>
+</body>
+</html>

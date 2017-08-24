@@ -30,6 +30,11 @@ var config = {
 	ajaxGet : function(url, dataParam, callback){
 		$.get(url, dataParam, callback);
 	},
+	GetQueryString : function(name){
+		var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+		var r = window.location.search.substr(1).match(reg);
+		if(r!=null)return  unescape(r[2]); return null;
+	},
 	timing : function(){
 		window.setInterval(xueqiuTest,1000);
 	}

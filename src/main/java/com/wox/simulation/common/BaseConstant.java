@@ -13,6 +13,19 @@ public class BaseConstant {
 	
 	protected static final String CHARSET = ";charset=UTF-8";
 	
+	/**交易标志，委托*/
+	protected static final String TRANSACTIONSIGN_ENTRUST = "0";
+	/**交易标志，已成*/
+	protected static final String TRANSACTIONSIGN_HAVESUCCEEDED = "1";
+	/**交易标志，部成*/
+	protected static final String TRANSACTIONSIGN_PARTSUCCESS = "2";
+	/**交易标志，部撤*/
+	protected static final String TRANSACTIONSIGN_PARTREVOKE = "3";
+	/**买卖标志，卖出*/
+	protected static final String BUSINESSSIGN_SELL = "0";
+	/**买卖标志，买入*/
+	protected static final String BUSINESSSIGN_BUY = "1";
+	
 	/** 用于获取静态配置值 */
 	private static Properties props = null;
 

@@ -44,17 +44,17 @@ public class CombinationImplController extends BaseController {
 		DataResult<?> dataResult = null;
 		String callback = request.getParameter("callback");
 		String falg = request.getParameter("falg");
-		if(ObjectUtil.isEmpty(falg)){
+		if(ObjectUtil.isEmpty(falg) || "null".equals(falg)){
 			dataResult = new DataResult<String>(false, "没有查询标志");
 			return ObjectUtil.jsonp(callback, dataResult);
 		}
 		String pageNo = request.getParameter("pageNo");
-		if(ObjectUtil.isEmpty(pageNo)){
+		if(ObjectUtil.isEmpty(pageNo) || "null".equals(pageNo)){
 			dataResult = new DataResult<String>(false, "没有查询页码");
 			return ObjectUtil.jsonp(callback, dataResult);
 		}
 		String pageSize = request.getParameter("pageSize");
-		if(ObjectUtil.isEmpty(pageSize)){
+		if(ObjectUtil.isEmpty(pageSize) || "null".equals(pageSize)){
 			dataResult = new DataResult<String>(false, "没有查询页数");
 			return ObjectUtil.jsonp(callback, dataResult);
 		}
@@ -83,7 +83,7 @@ public class CombinationImplController extends BaseController {
 		DataResult<?> dataResult = null;
 		String callback = request.getParameter("callback");
 		String userid = request.getParameter("userid");
-		if(ObjectUtil.isEmpty(userid)){
+		if(ObjectUtil.isEmpty(userid) || "null".equals(userid)){
 			dataResult = new DataResult<String>(false, "没有用户id");
 			return ObjectUtil.jsonp(callback, dataResult);
 		}
@@ -98,23 +98,38 @@ public class CombinationImplController extends BaseController {
 		return ObjectUtil.jsonp(callback, dataResult);
 	}
 	
+	/**
+	 * 
+	 * 描述：创建组合
+	 * @author wuhaixu
+	 * @created 2017年8月24日 下午5:10:04
+	 * @since 
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value = "/found", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE + CHARSET)
 	@ResponseBody
 	public String creatCombination(HttpServletRequest request){
 		DataResult<?> dataResult = null;
 		String callback = request.getParameter("callback");
 		String userid = request.getParameter("userid");
-		if(ObjectUtil.isEmpty(userid)){
+		if(ObjectUtil.isEmpty(userid) || "null".equals(userid)){
 			dataResult = new DataResult<String>(false, "没有用户id");
 			return ObjectUtil.jsonp(callback, dataResult);
 		}
+		try {
+			Long.valueOf(userid);
+		} catch (NumberFormatException e) {
+			dataResult = new DataResult<String>(false, "用户id异常");
+			return ObjectUtil.jsonp(callback, dataResult);
+		}
 		String combinationName = request.getParameter("combinationName");
-		if(ObjectUtil.isEmpty(combinationName)){
+		if(ObjectUtil.isEmpty(combinationName) || "null".equals(combinationName)){
 			dataResult = new DataResult<String>(false, "没有组合名称");
 			return ObjectUtil.jsonp(callback, dataResult);
 		}
 		String combinationSynopsis = request.getParameter("combinationSynopsis");
-		if(ObjectUtil.isEmpty(combinationSynopsis)){
+		if(ObjectUtil.isEmpty(combinationSynopsis) || "null".equals(combinationSynopsis)){
 			dataResult = new DataResult<String>(false, "没有组合简介");
 			return ObjectUtil.jsonp(callback, dataResult);
 		}
@@ -126,6 +141,28 @@ public class CombinationImplController extends BaseController {
 			dataResult = new DataResult<String>(false, e.getMessage());
 		}
 		return ObjectUtil.jsonp(callback, dataResult);
+	}
+	
+	/**
+	 * 
+	 * 描述：股票交易买卖
+	 * @author wuhaixu
+	 * @created 2017年8月24日 下午5:11:27
+	 * @since 
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/trade", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE + CHARSET)
+	@ResponseBody
+	public String stockBusiness(HttpServletRequest request){
+		DataResult<?> dataResult = null;
+		String callback = request.getParameter("callback");
+		String userid = request.getParameter("userid");
+		if(ObjectUtil.isEmpty(userid) || "null".equals(userid)){
+			dataResult = new DataResult<String>(false, "没有用户id");
+			return ObjectUtil.jsonp(callback, dataResult);
+		}
+		return null;
 	}
 
 }

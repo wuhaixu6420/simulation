@@ -13,8 +13,11 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.wox.core.feature.orm.mybatis.Page;
+import com.wox.simulation.dao.UserMapper;
 import com.wox.simulation.dao.group.CombinationDetailsMapper;
 import com.wox.simulation.dao.group.CombinationPositionMapper;
+import com.wox.simulation.entity.User;
+import com.wox.simulation.entity.UserExample;
 import com.wox.simulation.entity.group.CombinationDetails;
 import com.wox.simulation.entity.group.CombinationDetailsExample;
 import com.wox.simulation.entity.group.CombinationPosition;
@@ -40,6 +43,12 @@ public class CombinationServiceImpl implements CombinationService {
 	 */
 	@Resource
 	private CombinationPositionMapper combinationPositionMapper;
+	
+	/**
+	 * 用户Dao
+	 */
+	@Resource
+	private UserMapper userMapper;
 	
 	@Override
 	public DataResult<?> getCombinationDetailsPageList(
@@ -124,6 +133,15 @@ public class CombinationServiceImpl implements CombinationService {
 			String combinationName, String combinationSynopsis) throws CombinationException {
 		logger.info("创建组合入参： userid = " + userid + ";combinationName = " + combinationName + ";combinationSynopsis = " + combinationSynopsis);
 		//TODO 判断是否存在该用户，不存在则显示无法创建
+		//查询该用户id是否存在用户
+		UserExample userExample = new UserExample();
+		userExample.createCriteria().andIdEqualTo(Long.valueOf(userid));
+		//查询
+		List<User> userList = userMapper.selectByExample(userExample);
+		//判断用户是否存在
+		if(ObjectUtil.isEmpty(userList) || userList.isEmpty()){
+			return new DataResult<String>(false, "该用户不存在");
+		}
 		//组合余额（初始资金）默认1,000,000
 		//1.1版本可以从后台获取初始资金
 		String combinationBalance = "1000000";
