@@ -98,5 +98,36 @@ public class TradeStockImplController extends BaseController {
 		}
 		return ObjectUtil.jsonp(callback, dataResult);
 	}
+	
+	/**
+	 * 
+	 * 描述：通过股票时时获取行情
+	 * @author wuhaixu
+	 * @created 2017年8月25日 下午1:39:32
+	 * @since 
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/query", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE + CHARSET)
+	@ResponseBody
+	public String alwaysQuotation(HttpServletRequest request){
+		DataResult<?> dataResult = null;
+		String callback = request.getParameter("callback");
+		String stockCode = request.getParameter("stockCode");
+		if(ObjectUtil.isEmpty(stockCode) || "null".equals(stockCode)){
+			dataResult = new DataResult<String>(false, "请输入股票代码");
+			return ObjectUtil.jsonp(callback, dataResult);
+		}
+		//查询股票信息
+		try {
+			dataResult = tradeStockService.queryStockInfo(stockCode);
+		} catch (TradeStockException e) {
+			dataResult = new DataResult<String>(false, e.getMessage());
+		} catch (Exception e) {
+			dataResult = new DataResult<String>(false, e.getMessage());
+		}
+		
+		return ObjectUtil.jsonp(callback, dataResult);
+	}
 
 }

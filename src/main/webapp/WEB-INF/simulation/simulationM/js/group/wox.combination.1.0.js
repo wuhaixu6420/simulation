@@ -8,7 +8,9 @@ var group = {
 		//查询单个组合
 		inquiry : '/combination/inquiry',
 		//创建
-		found : '/combination/found'
+		found : '/combination/found',
+		//查询股票信息
+		query : '/trade/query'
 	},
 	//创建组合
 	found : function(dataParam, callback){
@@ -23,6 +25,10 @@ var group = {
 	//查询单个组合详情
 	queryInquiry : function(dataParam, callback){
 		var url = config.crossDomainUrl + group.API.inquiry;
+		config.ajaxJsonp(url, dataParam, callback);
+	},
+	queryStock : function(dataParam, callback){
+		var url = config.crossDomainUrl + group.API.query;
 		config.ajaxJsonp(url, dataParam, callback);
 	}
 }

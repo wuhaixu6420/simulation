@@ -30,4 +30,17 @@ public interface TradeStockService {
 	 * @throws Exception
 	 */
 	DataResult<?> stockDeal(String combinationId, String type, String stockName, String stockCode, String market, String num, String price) throws TradeStockException, Exception;
+	
+	/**
+	 * 
+	 * 描述：查询股票信息
+	 * @author wuhaixu
+	 * @created 2017年8月25日 下午2:27:02
+	 * @since 
+	 * @param stockCode
+	 * @return
+	 * @throws TradeStockException
+	 * @throws Exception
+	 */
+	DataResult<?> queryStockInfo(String stockCode) throws TradeStockException, Exception;
 }

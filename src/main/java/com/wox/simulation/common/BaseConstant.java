@@ -13,6 +13,10 @@ public class BaseConstant {
 	
 	protected static final String CHARSET = ";charset=UTF-8";
 	
+	protected final static String charsetNameUTF8 = "UTF-8";
+	
+	protected final static String charsetNameGBK = "GBK";
+	
 	/**交易标志，委托*/
 	protected static final String TRANSACTIONSIGN_ENTRUST = "0";
 	/**交易标志，已成*/

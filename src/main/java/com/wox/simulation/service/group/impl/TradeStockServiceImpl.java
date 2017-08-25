@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.wox.simulation.dao.group.CombinationDetailsMapper;
 import com.wox.simulation.dao.group.CombinationTransactionMapper;
 import com.wox.simulation.entity.group.CombinationDetails;
@@ -19,6 +20,8 @@ import com.wox.simulation.exception.TradeStockException;
 import com.wox.simulation.service.BaseService;
 import com.wox.simulation.service.group.TradeStockService;
 import com.wox.simulation.util.DataResult;
+import com.wox.simulation.util.HttpRespon;
+import com.wox.simulation.util.HttpUtil;
 import com.wox.simulation.util.ObjectUtil;
 
 @Service
@@ -26,6 +29,27 @@ public class TradeStockServiceImpl extends BaseService implements TradeStockServ
 	
 	private static Logger logger = LoggerFactory.getLogger(TradeStockServiceImpl.class);
 
+	/**
+	 * 查询股票使用
+	 */
+	private final static String XUEQIU_URL = "https://xueqiu.com/stock/search.json";
+	
+	/**
+	 * 雪球cookie使用
+	 */
+	private final static String XUEQIU_COOKIE = "xq_a_token=35967e90fece12b70f15096c72ae9b6982f628a7;";
+	
+//	String cookie = 
+//	"aliyungf_tc=AQAAAJYnAFACdwMAui3nZVNWTziy/PVx; " + 
+//	"xq_a_token=35967e90fece12b70f15096c72ae9b6982f628a7; " ;  查询股票信息使用
+//	"xq_a_token.sig=-qUrmkra84xJqFAD2ZukbCZ1FMA; " + 
+//	"xq_r_token=04a34d441044eea56430a435d6c270f709b923ae; " + 
+//	"xq_r_token.sig=jIYThmOvEthGQpyKL58Zz9dXhE8; " + 
+//	"u=751503645706016; " + 
+//	"device_id=4b6db5cc5993afcd93bdfe12a2acf374; " + 
+//	"Hm_lvt_1db88642e346389874251b5a1eded6e3=1503645102; " + 
+//	"Hm_lpvt_1db88642e346389874251b5a1eded6e3=1503645707";
+	
 	/**
 	 * 组合详情Dao
 	 */
@@ -62,7 +86,7 @@ public class TradeStockServiceImpl extends BaseService implements TradeStockServ
 		//股票市场
 		combinationTransaction.setStockMarket(market);
 		//股票名称
-		combinationTransaction.setStockName("");
+		combinationTransaction.setStockName(stockName);
 		//买卖标志
 		combinationTransaction.setBusinessSign(type);
 		//买卖数量
@@ -82,6 +106,18 @@ public class TradeStockServiceImpl extends BaseService implements TradeStockServ
 		} else {
 			throw new TradeStockException("委托失败");
 		}
+	}
+
+	
+	@Override
+	public DataResult<?> queryStockInfo(String stockCode)
+			throws TradeStockException, Exception {
+		logger.info("查询股票信息： stockCode = " + stockCode);
+		String param = "code=" + stockCode + "&size=5&_=" + new Date().getTime();
+		//通过雪球查询股票信息
+		HttpRespon httpRespon = HttpUtil.sendGet(XUEQIU_COOKIE, XUEQIU_URL, param, charsetNameUTF8);
+		logger.info(httpRespon.getContent());
+		return new DataResult<Object>(true, JSONObject.toJSON(httpRespon.getContent()));
 	}
 
 

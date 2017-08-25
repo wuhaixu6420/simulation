@@ -2,6 +2,7 @@ package com.wox.simulation.xueqiuTest;
 
 import org.junit.Test;
 
+import com.alibaba.fastjson.JSONObject;
 import com.wox.simulation.commonTest.BaseConstant;
 import com.wox.simulation.util.HttpRespon;
 import com.wox.simulation.util.HttpUtil;
@@ -231,7 +232,30 @@ public class XueQiuTest extends BaseConstant{
 		 */
 	}
 	
-	
+	@Test
+	public void queryStock(){
+		String url = "https://xueqiu.com/stock/search.json";
+		String param = "code=600&size=5&_=23423423423";
+		//通过雪球查询股票信息
+		String cookie = 
+				"aliyungf_tc=AQAAAJYnAFACdwMAui3nZVNWTziy/PVx; " + 
+		"xq_a_token=35967e90fece12b70f15096c72ae9b6982f628a7; " ;
+//		"xq_a_token.sig=-qUrmkra84xJqFAD2ZukbCZ1FMA; " + 
+//		"xq_r_token=04a34d441044eea56430a435d6c270f709b923ae; " + 
+//		"xq_r_token.sig=jIYThmOvEthGQpyKL58Zz9dXhE8; " + 
+//		"u=751503645706016; " + 
+//		"device_id=4b6db5cc5993afcd93bdfe12a2acf374; " + 
+//		"Hm_lvt_1db88642e346389874251b5a1eded6e3=1503645102; " + 
+//		"Hm_lpvt_1db88642e346389874251b5a1eded6e3=1503645707";
+//		System.out.println(cookie);
+		HttpRespon httpRespon = HttpUtil.sendGet(cookie, url, param, charsetNameUTF8);
+//		String str = HttpUtil.XMLhttpRequest(url + "?" + param, charsetNameUTF8, null);
+//		System.out.println(str);
+		System.out.println(httpRespon.getContent());
+		Object object = JSONObject.toJSON(httpRespon.getContent());
+		
+		System.out.println(object);
+	}
 	
 	
 	

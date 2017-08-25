@@ -16,6 +16,8 @@
 	<div class="mui-content">
 		<div id="groupOne">该用户单个组合</div>
 		<p></p>
+		<div id="groupPosition">单个组合的持仓情况</div>
+		<p></p>
 		<div id="groupAll">该用户全部组合</div>
 	</div>
 	<script src="https://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
@@ -63,26 +65,45 @@
 				return false;
 			} else {
 				var foreachList = result.data.result;
-				for(var i=0; i<foreachList.length; i++){
 					console.log("组合信息");
-					console.log(foreachList[i].combinationDetails);
+					console.log(foreachList[0].combinationDetails);
 					console.log("组合持仓信息");
-					console.log(foreachList[i].positionList);
+					console.log(foreachList[0].positionList);
 					
 					//如果查询不到值，就不会显示key value
-					var str = "<p>组合id：" + foreachList[i].combinationDetails.id
-					+ "\n组合名称：" + foreachList[i].combinationDetails.combinationName
-					+ "\n组合简介：" + foreachList[i].combinationDetails.combinationSynopsis
-					+ "\n组合余额：" + foreachList[i].combinationDetails.combinationBalance
-					+ "\n组合市值：" + foreachList[i].combinationDetails.totalMarketValue
-					+ "\n组合总收益：" + foreachList[i].combinationDetails.totalProfit
-					+ "\n组合月收益：" + foreachList[i].combinationDetails.monthProfit
-					+ "\n组合日收益：" + foreachList[i].combinationDetails.weekProfit
-					+ "\n组合今日收益：" + foreachList[i].combinationDetails.todayProfit
+					var str = "<p>组合id：" + foreachList[0].combinationDetails.id
+					+ "\n组合名称：" + foreachList[0].combinationDetails.combinationName
+					+ "\n组合简介：" + foreachList[0].combinationDetails.combinationSynopsis
+					+ "\n组合余额：" + foreachList[0].combinationDetails.combinationBalance
+					+ "\n组合市值：" + foreachList[0].combinationDetails.totalMarketValue
+					+ "\n组合总收益：" + foreachList[0].combinationDetails.totalProfit
+					+ "\n组合月收益：" + foreachList[0].combinationDetails.monthProfit
+					+ "\n组合日收益：" + foreachList[0].combinationDetails.weekProfit
+					+ "\n组合今日收益：" + foreachList[0].combinationDetails.todayProfit
 					+ "</p>";
 					console.log(str);
+					
+					var positionList = foreachList[0].positionList;
+					for(var i=0; i<positionList.length; i++){
+						var posStr = "<p>持仓id：" + positionList[i].id
+						+ "\n组合id：" + positionList[i].combinationId
+						+ "\n股票名称：" + positionList[i].stockName
+						+ "\n股票代码：" + positionList[i].stockCode
+						+ "\n股票市场：" + positionList[i].stockMarket
+						+ "\n可用股票数：" + positionList[i].usableStockNum
+						+ "\n持仓股票数：" + positionList[i].positionStockNum
+						+ "\n初始仓位：" + positionList[i].initialPosition
+						+ "\n现在仓位：" + positionList[i].endPosition
+						+ "\n成本价：" + positionList[i].costPrice
+//						+ "\n调仓时间：" + positionList[i].createTime
+						+ "</p>";
+						console.log(posStr);
+					}
+					
+					$("#groupPosition").append(posStr);
+					
+					
 					$("#groupOne").append(str);
-				}
 			}
 		});
 	</script>
